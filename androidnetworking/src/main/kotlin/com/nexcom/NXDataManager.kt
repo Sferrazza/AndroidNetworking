@@ -1,3 +1,5 @@
+package com.nexcom
+
 import com.github.kittinunf.fuel.core.FuelError
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
