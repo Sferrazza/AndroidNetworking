@@ -54,8 +54,6 @@ publishing {
             from components.java
         }
     }
-}
-publishing {
     repositories {
         maven {
             // change to point to your repo, e.g. http://my.org/repo
