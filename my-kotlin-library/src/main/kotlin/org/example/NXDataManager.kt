@@ -9,45 +9,42 @@ import java.lang.reflect.Type
  */
 
 
-open class NXDataManager<T>(manager: NXNetworkManager? = null, rpc : String?, parameters: List<Pair<String, String>>? = null, method : String = "get")
-{
-    public var manager = manager
-    public var rpc = rpc
-    public var parameters = parameters
-    public var method = method
+ open class NXDataManager<T>(manager: NXNetworkManager? = null, rpc : String?, parameters: List<Pair<String, String>>? = null, method : String = "get")
+ {
+     public var manager = manager
+     public var rpc = rpc
+     public var parameters = parameters
+     public var method = method
 
-    constructor(rpc: String) : this(null,rpc)
+     constructor(rpc: String) : this(null,rpc)
 
-    constructor(rpc: String, parameters: List<Pair<String, String>>) : this(null,rpc,parameters)
+     constructor(rpc: String, parameters: List<Pair<String, String>>) : this(null,rpc,parameters)
 
 
 
-    open fun sendRequest(completionHandler: (models: List<T>) -> Unit, errorHandler: (error:Error) -> Unit) {
+     open fun sendRequest(completionHandler: (models: List<T>) -> Unit, errorHandler: (error:Error) -> Unit) {
 
-        val request = NXNetworkRequest(rpc, parameters, method)
+         val request = NXNetworkRequest(rpc, parameters, method)
 
-        request.send(manager, completionHandler = { s: String ->
+         request.send(manager, completionHandler = { s: String ->
 
-            parseResponse(s, completionHandler, errorHandler)
+             parseResponse(s, completionHandler, errorHandler)
 
-        }, errorHandler = { error: FuelError ->
+         }, errorHandler = { error: FuelError ->
 
-            val e = Error(error.localizedMessage)
+             val e = Error(error.localizedMessage)
 
-            errorHandler(e)
-        })
-    }
+             errorHandler(e)
+         })
+     }
 
-    open fun parseResponse(responseString : String, completionHandler: (models: List<T>) -> Unit, errorHandler: (error:Error) -> Unit) {
+     open fun parseResponse(responseString : String, completionHandler: (models: List<T>) -> Unit, errorHandler: (error:Error) -> Unit) {
 
-        assert(false)
-    }
+         assert(false)
+     }
 
-    public inline fun <reified U> Gson.classFromJson(json: String) = this.fromJson<U>(json, U::class.java)
+     public inline fun <reified U> Gson.classFromJson(json: String) = this.fromJson<U>(json, U::class.java)
 
-}
+     public inline fun <reified U> tableFromJson(json: String) = Gson().fromJson<U>(json, U::class.java)
 
-open class ParameterizedTypeReference<T>
-{
-    inline fun <reified T: Any> typeRef(): ParameterizedTypeReference<T> = object: ParameterizedTypeReference<T>(){}
-}
+ }
