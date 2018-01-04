@@ -113,16 +113,11 @@ data class NXNexcomEnvironment(val sitetoken : String, val sessionid : String)
  * @param scheme    URI HTTP scheme to use. Defaults to http as Nexcom servers suck.
  * @param host      URI part host name.
  * @param path      URI part path to resource file.
+ * @param nexcomEnvironment Provides an extension data class to specify nexcom environment specifics.
  */
-class NXNetworkManager(val scheme : String = "http", val host : String, val path : String)
+class NXNetworkManager(val scheme : String = "http", val host : String, val path : String, var nexcomEnvironment: NXNexcomEnvironment? = null)
 {
-    /**
-     * Provides an extension data class to specify nexcom environment specifics.
-     * @type {NXNetworkEnvironment}
-     * @see NXNexcomEnvironment
-     */
-    var nexcomEnvironment : NXNexcomEnvironment? = null
-
+    
     companion object {
 
         /**
