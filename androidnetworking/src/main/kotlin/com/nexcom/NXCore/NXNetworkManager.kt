@@ -114,14 +114,14 @@ data class NXNexcomEnvironment(val sitetoken : String, val sessionid : String)
  * @param host      URI part host name.
  * @param path      URI part path to resource file.
  */
-public class NXNetworkManager(val scheme : String = "http", val host : String, val path : String)
+class NXNetworkManager(val scheme : String = "http", val host : String, val path : String)
 {
     /**
      * Provides an extension data class to specify nexcom environment specifics.
      * @type {NXNetworkEnvironment}
      * @see NXNexcomEnvironment
      */
-    public var nexcomEnvironment : NXNexcomEnvironment? = null
+    var nexcomEnvironment : NXNexcomEnvironment? = null
 
     companion object {
 
