@@ -47,6 +47,10 @@ dokka {
     outputDirectory = "$buildDir/javadoc"
 }
 
+jar {
+    from sourceSets.main.allSource
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
