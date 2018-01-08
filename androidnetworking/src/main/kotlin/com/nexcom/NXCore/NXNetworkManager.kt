@@ -67,11 +67,11 @@ open class NXNetworkRequest(rpc : String?, parameters: List<Pair<String, String>
 
         val urlString = manager.urlString
 
-
         urlString.httpGet(allParameters).responseString { _, response, result ->
 
             if (isDebug) {
-              println("Request: " + response.toString())
+                println("URL Request: " + urlString)
+                println("Response: " + response.toString())
             }
 
 
