@@ -71,7 +71,8 @@ open class NXNetworkRequest(rpc : String?, parameters: List<Pair<String, String>
         urlString.httpGet(allParameters).responseString { _, response, result ->
 
             if (isDebug) {
-              println("Request: " + response.toString())
+              println("Network request: " + urlString)
+              println("Response: " + response.toString())
             }
 
 
@@ -117,7 +118,7 @@ data class NXNexcomEnvironment(val sitetoken : String, val sessionid : String)
  */
 class NXNetworkManager(val scheme : String = "http", val host : String, val path : String, var nexcomEnvironment: NXNexcomEnvironment? = null)
 {
-    
+
     companion object {
 
         /**
