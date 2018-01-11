@@ -1,5 +1,6 @@
 package com.nexcom.NXCore
 
+import com.beust.klaxon.*
 import com.github.kittinunf.fuel.core.FuelError
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -27,6 +28,7 @@ import java.lang.reflect.Type
  */
  open class NXDataManager<T>(manager: NXNetworkManager? = null, rpc : String?, parameters: List<Pair<String, String>>? = null, method : String = "get")
  {
+
      public var manager = manager
      public var rpc = rpc
      public var parameters = parameters
@@ -56,7 +58,7 @@ import java.lang.reflect.Type
       * @param   {(List<T>)->Unit}    completionHandler   Returns parsed models in response.
       * @param   {(Error)->Unit}      errorHandler        Allows for handling of json parse & networking errors.
       */
-     open fun sendRequest(completionHandler: (models: List<T>) -> Unit, errorHandler: (error:Error) -> Unit) {
+     fun sendRequest(completionHandler: (models: List<T>) -> Unit, errorHandler: (error:Error) -> Unit) {
 
          val request = NXNetworkRequest(rpc, parameters, method)
 
@@ -64,7 +66,7 @@ import java.lang.reflect.Type
 
          request.send(manager, completionHandler = { s: String ->
 
-             parseResponse(s, completionHandler, errorHandler)
+             completionHandler(parseResponse(s, errorHandler))
 
          }, errorHandler = { error: FuelError ->
 
@@ -84,22 +86,20 @@ import java.lang.reflect.Type
       * @param {(List<T>)->Unit}  completionHandler  Completion handler to be called when parsing is complete.
       * @param {(Error)->Unit}    errorHandler       Allows for adding additional error checking.
       */
-     open fun parseResponse(responseString : String, completionHandler: (models: List<T>) -> Unit, errorHandler: (error:Error) -> Unit) {
+     open fun parseResponse(responseString : String, errorHandler: (error:Error) -> Unit): List<T> {
 
-         assert(false)
+         //Should be overridden by subclasses
+         assert(true)
+
+         return listOf()
      }
 
-     /**
-      * Helper function for parsing models from json.
-      * Available, but not necessary for functionality.
-      * @param {String} json Json string to be parsed
-      */
-     public inline fun <reified U> Gson.classFromJson(json: String) = this.fromJson<U>(json, U::class.java)
+     inline fun <reified T>parseJsonTable(json : String, tableName : String = "Table"): List<T> {
 
-     /**
-      * Preferred helper function for parsing models from json string. Abstracts GSON library.
-      * @param {String} json Json string to be parsed
-      */
-     public inline fun <reified U> tableFromJson(json: String) = Gson().fromJson<U>(json, U::class.java)
+         val root = Parser().parse(StringBuilder(json)) as JsonObject
 
+         val table = root.array<JsonObject>("Table") ?: throw KlaxonException("Table should not be null")
+
+         return nxJsonParser().parseFromJsonArray(table) ?: throw KlaxonException("Models could not be parsed from json")
+     }
  }
