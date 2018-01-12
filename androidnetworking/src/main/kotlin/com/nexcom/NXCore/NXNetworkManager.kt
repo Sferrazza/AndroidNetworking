@@ -101,12 +101,12 @@ open class NXNetworkRequest(rpc : String?, parameters: List<Pair<String, String>
  * @type {NXNetworkEnvironment}
  * @see NXNetworkManager
  */
-data class NXNexcomEnvironment(val sitetoken : String, val sessionid : String)
+data class NXNexcomEnvironment(val sitetoken : String, val sessionid : String) : NXJsonEncodable
 {
 
 }
 
-data class NXUri(val scheme : String = "http", val host : String, val path : String)
+data class NXUri(val scheme : String = "http", val host : String, val path : String) : NXJsonEncodable
 {
     val urlString : String
     get() = scheme + host + path
