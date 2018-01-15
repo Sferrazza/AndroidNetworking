@@ -19,11 +19,11 @@
           <option name="destination" value="$MODULE_DIR$/../../build/classes/kotlin/main" />
           <option name="noStdlib" value="true" />
           <option name="noReflect" value="true" />
-          <option name="moduleName" value="androidnetworking_main" />
+          <option name="moduleName" value="androidnetworking" />
           <option name="addCompilerBuiltIns" value="true" />
           <option name="loadBuiltInsFromDependencies" value="true" />
-          <option name="languageVersion" value="1.1" />
-          <option name="apiVersion" value="1.1" />
+          <option name="languageVersion" value="1.2" />
+          <option name="apiVersion" value="1.2" />
           <option name="pluginOptions">
             <array />
           </option>
@@ -51,16 +51,16 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.github.kittinunf.fuel:fuel-android:1.12.0:aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.beust:klaxon:2.0.8" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.beust:klaxon:2.0.8" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: com.beust:klaxon:2.0.8" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.guava:guava:18.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.12" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.code.gson:gson:2.8.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.github.jitpack:gradle-simple:1.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.1.60" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.github.kittinunf.result:result:1.2.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-test:1.1.4-3" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-test-junit:1.1.4-3" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.github.kittinunf.fuel:fuel:1.12.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.github.salomonbrys.kotson:kotson:2.5.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.github.kittinunf.fuel:fuel-android:1.12.0:aar" level="project" />
@@ -68,7 +68,6 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.google.code.gson:gson:2.8.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.github.jitpack:gradle-simple:1.0" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.1.60" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.github.kittinunf.result:result:1.2.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.github.kittinunf.fuel:fuel:1.12.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.github.salomonbrys.kotson:kotson:2.5.0" level="project" />
@@ -77,22 +76,35 @@
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.google.code.gson:gson:2.8.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.github.jitpack:gradle-simple:1.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.1.60" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.github.kittinunf.result:result:1.2.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.github.kittinunf.fuel:fuel:1.12.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: com.github.salomonbrys.kotson:kotson:2.5.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.2.10" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.2.10" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-test-junit:1.2.10" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-test:1.2.10" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.2.10" level="project" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="fuel-android-1.12.0" level="project" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="kotson-2.5.0" level="project" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="fuel-1.12.0" level="project" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="result-1.2.0" level="project" />
-    <orderEntry type="library" exported="" scope="PROVIDED" name="kotlin-stdlib-1.1.60" level="project" />
+    <orderEntry type="library" exported="" scope="PROVIDED" name="kotlin-stdlib-1.2.10" level="project" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="gradle-simple-1.0" level="project" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="gson-2.8.2" level="project" />
+    <orderEntry type="library" exported="" scope="PROVIDED" name="klaxon-2.0.8" level="project" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="annotations-13.0" level="project" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="guava-18.0" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="kotlin-test-junit-1.1.4-3" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="kotlin-test-1.1.4-3" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="kotlin-test-junit-1.2.10" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="kotlin-test-1.2.10" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="junit-4.12" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="hamcrest-core-1.3" level="project" />
+    <orderEntry type="library" exported="" name="androidnetworking.androidnetworking-0.0.1" level="project" />
+    <orderEntry type="library" exported="" name="androidnetworking.androidnetworking-0.0.1" level="project" />
+    <orderEntry type="library" exported="" name="androidnetworking.androidnetworking-0.0.1" level="project" />
+    <orderEntry type="library" exported="" name="androidnetworking.androidnetworking-0.0.1" level="project" />
+    <orderEntry type="library" exported="" name="androidnetworking.androidnetworking-0.0.1" level="project" />
+    <orderEntry type="library" exported="" name="androidnetworking.androidnetworking-0.0.1" level="project" />
+    <orderEntry type="library" exported="" name="androidnetworking.androidnetworking-0.0.1" level="project" />
+    <orderEntry type="library" exported="" name="androidnetworking.androidnetworking-0.0.1" level="project" />
   </component>
 </module>

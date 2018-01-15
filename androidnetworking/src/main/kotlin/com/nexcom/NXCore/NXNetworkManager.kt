@@ -47,7 +47,7 @@ open class NXNetworkRequest(rpc : String?, parameters: List<Pair<String, String>
 
         var manager = withManager
         if (manager == null) {
-            manager = NXNetworkManager.evolveJsonManager
+            manager = NXNetworkManager.defaultManager
         }
 
         val initialParameters = parameters ?: listOf()
@@ -67,12 +67,16 @@ open class NXNetworkRequest(rpc : String?, parameters: List<Pair<String, String>
 
         val urlString = manager.urlString
 
-
         urlString.httpGet(allParameters).responseString { _, response, result ->
 
             if (isDebug) {
+<<<<<<< HEAD
               println("Network request: " + urlString)
               println("Response: " + response.toString())
+=======
+                println("URL Request: " + urlString)
+                println("Response: " + response.toString())
+>>>>>>> 1c7ccb51fe1e4222589ae43f1beb5c587ff7025b
             }
 
 
@@ -102,9 +106,15 @@ open class NXNetworkRequest(rpc : String?, parameters: List<Pair<String, String>
  * @type {NXNetworkEnvironment}
  * @see NXNetworkManager
  */
-data class NXNexcomEnvironment(val sitetoken : String, val sessionid : String)
+data class NXNexcomEnvironment(val sitetoken : String, val sessionid : String) : NXJsonEncodable
 {
 
+}
+
+data class NXUri(val scheme : String = "http", val host : String, val path : String) : NXJsonEncodable
+{
+    val urlString : String
+    get() = scheme + host + path
 }
 
 /**
@@ -116,7 +126,7 @@ data class NXNexcomEnvironment(val sitetoken : String, val sessionid : String)
  * @param path      URI part path to resource file.
  * @param nexcomEnvironment Provides an extension data class to specify nexcom environment specifics.
  */
-class NXNetworkManager(val scheme : String = "http", val host : String, val path : String, var nexcomEnvironment: NXNexcomEnvironment? = null)
+open class NXNetworkManager(open var uri : NXUri, open var nexcomEnvironment: NXNexcomEnvironment? = null)
 {
 
     companion object {
@@ -126,7 +136,7 @@ class NXNetworkManager(val scheme : String = "http", val host : String, val path
          * Note: specific Evolve environments should be configured in individual projects.
          * @type {NXNetworkManager}
          */
-        var evolveJsonManager = NXNetworkManager("http://", "evolve.nexcomgroup.com", "/apps/demo/iOS/aspx/json.aspx")
+        var defaultManager = NXNetworkManager(NXUri("http://", "evolve.nexcomgroup.com", "/apps/demo/iOS/aspx/json.aspx"))
 
     }
 
@@ -135,5 +145,5 @@ class NXNetworkManager(val scheme : String = "http", val host : String, val path
      * @type {String}
      */
     val urlString : String
-        get() = scheme + host + path
+        get() = uri.urlString
 }
