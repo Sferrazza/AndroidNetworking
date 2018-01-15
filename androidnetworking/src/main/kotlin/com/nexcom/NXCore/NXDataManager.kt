@@ -98,7 +98,7 @@ import java.lang.reflect.Type
 
          val root = Parser().parse(StringBuilder(json)) as JsonObject
 
-         val table = root.array<JsonObject>("Table") ?: throw KlaxonException("Table should not be null")
+         val table = root.array<JsonObject>(tableName) ?: throw KlaxonException("Table should not be null")
 
          return nxJsonParser().parseFromJsonArray(table) ?: throw KlaxonException("Models could not be parsed from json")
      }
