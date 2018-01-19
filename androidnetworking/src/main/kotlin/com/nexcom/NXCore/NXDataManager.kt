@@ -58,7 +58,7 @@ import java.lang.reflect.Type
       * @param   {(List<T>)->Unit}    completionHandler   Returns parsed models in response.
       * @param   {(Error)->Unit}      errorHandler        Allows for handling of json parse & networking errors.
       */
-     fun sendRequest(completionHandler: (models: List<T>) -> Unit, errorHandler: (error:Error) -> Unit) {
+     open fun sendRequest(completionHandler: (models: List<T>) -> Unit, errorHandler: (error:Error) -> Unit) {
 
          val request = NXNetworkRequest(rpc, parameters, method)
 
