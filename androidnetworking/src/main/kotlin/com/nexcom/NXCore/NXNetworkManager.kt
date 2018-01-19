@@ -70,7 +70,7 @@ open class NXNetworkRequest(rpc : String?, parameters: List<Pair<String, String>
         urlString.httpGet(allParameters).responseString { _, response, result ->
 
             if (isDebug) {
-                
+
                 println("URL Request: " + urlString)
                 println("Response: " + response.toString())
             }

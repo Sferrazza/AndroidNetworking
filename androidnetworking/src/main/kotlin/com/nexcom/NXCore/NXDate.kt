@@ -20,25 +20,23 @@ fun Date.toJsonString(): String {
 @Target(AnnotationTarget.FIELD)
 annotation class NXDate
 
-@Target(AnnotationTarget.FIELD)
-annotation class NXTable
 
 fun nxJsonParser() = Klaxon()
-        .fieldConverter(NXDate::class, object  : Converter<LocalDateTime> {
+        .fieldConverter(NXDate::class, object  : Converter<Date> {
 
-            override fun fromJson(jv: JsonValue): LocalDateTime {
+            override fun fromJson(jv: JsonValue): Date{
 
                 if (jv.string != null){
 
-                    return LocalDateTime.parse(jv.string, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss",Locale.US))
+                    return jsonDateFormat.parse(jv.string)
                 }
                 else {
                     throw KlaxonException("Couldn't parse date " + jv.string)
                 }
             }
 
-            override fun toJson(value: LocalDateTime): String? {
+            override fun toJson(value: Date): String? {
 
-                return value.toString()
+                return value.toJsonString()
             }
         })
