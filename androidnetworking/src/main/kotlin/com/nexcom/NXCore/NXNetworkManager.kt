@@ -70,8 +70,13 @@ open class NXNetworkRequest(rpc : String?, parameters: List<Pair<String, String>
         urlString.httpGet(allParameters).responseString { _, response, result ->
 
             if (isDebug) {
+<<<<<<< HEAD
+              println("Network request: " + urlString)
+              println("Response: " + response.toString())
+=======
                 println("URL Request: " + urlString)
                 println("Response: " + response.toString())
+>>>>>>> 1c7ccb51fe1e4222589ae43f1beb5c587ff7025b
             }
 
 
@@ -123,7 +128,7 @@ data class NXUri(val scheme : String = "http", val host : String, val path : Str
  */
 open class NXNetworkManager(open var uri : NXUri, open var nexcomEnvironment: NXNexcomEnvironment? = null)
 {
-    
+
     companion object {
 
         /**

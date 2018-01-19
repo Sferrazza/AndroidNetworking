@@ -50,10 +50,20 @@ dokka {
     outputDirectory = "$buildDir/javadoc"
 }
 
+task sourcesJar(type: Jar, dependsOn: classes) {
+	classifier 'sources'
+	from sourceSets.main.allSource
+}
+
+artifacts {
+	archives sourcesJar
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
+            artifact sourcesJar
         }
     }
 }
