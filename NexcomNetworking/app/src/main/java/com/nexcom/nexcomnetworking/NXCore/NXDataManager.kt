@@ -2,10 +2,6 @@ package com.nexcom.NXCore
 
 import com.beust.klaxon.*
 import com.github.kittinunf.fuel.core.FuelError
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import java.lang.reflect.ParameterizedType
-import java.lang.reflect.Type
 
 /**
  * Created by danielmeachum on 12/22/17.
@@ -17,19 +13,19 @@ import java.lang.reflect.Type
  * When subclassing, you <b>must</b> specify the model data class the json string will be parsed into.
  * When subclassing, you <b>must</b> override the parseResponse function or an assertion will occur.
  * This class encapsulates a network request and therefore requests an RPC, parameters and other parameters to pass into the request.
- * Call sendRequest after creating the data manager subclass.
+ * Call sendRequest after creating the data network subclass.
  *
- * @param manager      Specific network manager to use. If null, NXNetworkManager.evolveJsonManager is used.
+ * @param network      Specific network network to use. If null, NXNetwork.evolveJsonManager is used.
  * @param rpc          The remote procedure to be called on the server. Optional as not all aspx pages require an RPC.
  * @param parameters   List of key/value pairs to be passed into the RPC.
  * @param method       Specify http method get/post. Currently only get is supported but this will be updated soon.
  *
  * @type {NXDataManager}
  */
- open class NXDataManager<T>(manager: NXNetworkManager? = null, rpc : String?, parameters: List<Pair<String, String>>? = null, method : String = "get")
+ open class NXDataManager<T>(network: NXNetwork? = null, rpc : String?, parameters: List<Pair<String, String>>? = null, method : String = "get")
  {
 
-     public var manager = manager
+     public var network = network
      public var rpc = rpc
      public var parameters = parameters
      public var method = method
@@ -64,7 +60,7 @@ import java.lang.reflect.Type
 
          request.isDebug = isDebug
 
-         request.send(manager, completionHandler = { s: String ->
+         request.send(network, completionHandler = { s: String ->
 
              completionHandler(parseResponse(s, errorHandler))
 

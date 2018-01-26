@@ -36,18 +36,18 @@ open class NXNetworkRequest(rpc : String?, parameters: List<Pair<String, String>
     /**
      * Sends network request to server. Allows for inline completion and error handling.
      * Note: completion handler returns the raw String value of the response.
-     * Passing in a network manager allows inline customization of the server, sitetoken, sessionid, etc. If left null (as default), the default manager will be used.
-     * In addition to parameters passed in constructor, network manager parameters such as sitetoken, sessionid, rpc, are added into the list of parameters in request.
+     * Passing in a network network allows inline customization of the server, sitetoken, sessionid, etc. If left null (as default), the default network will be used.
+     * In addition to parameters passed in constructor, network network parameters such as sitetoken, sessionid, rpc, are added into the list of parameters in request.
      *
-     * @param withManager         Specific network manager to use. If null, NXNetworkManager.evolveJsonManager is used.
+     * @param withNetwork         Specific network network to use. If null, NXNetwork.evolveJsonManager is used.
      * @param completionHandler   If request returns a response, completionHandler is called with response as String value.
      * @param errorHandler        Allows for handling of networking errors.
      */
-    open fun send(withManager: NXNetworkManager? = null, completionHandler : (String)->Unit, errorHandler : (FuelError)->Unit) {
+    open fun send(withNetwork: NXNetwork? = null, completionHandler : (String)->Unit, errorHandler : (FuelError)->Unit) {
 
-        var manager = withManager
+        var manager = withNetwork
         if (manager == null) {
-            manager = NXNetworkManager.defaultManager
+            manager = NXNetwork.defaultNetwork
         }
 
         val initialParameters = parameters ?: listOf()
@@ -94,13 +94,13 @@ open class NXNetworkRequest(rpc : String?, parameters: List<Pair<String, String>
 
 /**
  * Abstract base class for essentials of a Nexcom server envrionment.
- * Used as a property when creating a network manager.
+ * Used as a property when creating a network network.
  *
  * @param sitetoken   Point to a particular database.
  * @param sessionid   User's unique session identifier.
  *
  * @type {NXNetworkEnvironment}
- * @see NXNetworkManager
+ * @see NXNetwork
  */
 data class NXNexcomEnvironment(val sitetoken : String, val sessionid : String) : NXJsonEncodable
 {
@@ -122,7 +122,7 @@ data class NXUri(val scheme : String = "http", val host : String, val path : Str
  * @param path      URI part path to resource file.
  * @param nexcomEnvironment Provides an extension data class to specify nexcom environment specifics.
  */
-open class NXNetworkManager(open var uri : NXUri, open var nexcomEnvironment: NXNexcomEnvironment? = null)
+open class NXNetwork(open var uri : NXUri, open var nexcomEnvironment: NXNexcomEnvironment? = null)
 {
 
     companion object {
@@ -130,9 +130,9 @@ open class NXNetworkManager(open var uri : NXUri, open var nexcomEnvironment: NX
         /**
          * Default json resource file for shared Evolve projects.
          * Note: specific Evolve environments should be configured in individual projects.
-         * @type {NXNetworkManager}
+         * @type {NXNetwork}
          */
-        var defaultManager = NXNetworkManager(NXUri("http://", "evolve.nexcomgroup.com", "/apps/demo/iOS/aspx/json.aspx"))
+        var defaultNetwork = NXNetwork(NXUri("http://", "evolve.nexcomgroup.com", "/apps/demo/iOS/aspx/json.aspx"))
 
     }
 
