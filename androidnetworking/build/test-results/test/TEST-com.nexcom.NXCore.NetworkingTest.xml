@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.nexcom.NXCore.NetworkingTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-01-11T20:02:24" hostname="Daniels-MacBook-Pro-2.local" time="0.345">
-  <properties/>
-  <testcase name="testNetworkModelParsing" classname="com.nexcom.NXCore.NetworkingTest" time="0.345"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
