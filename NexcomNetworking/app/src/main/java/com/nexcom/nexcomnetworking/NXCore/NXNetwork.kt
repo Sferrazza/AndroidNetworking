@@ -122,7 +122,7 @@ data class NXUri(val scheme : String = "http", val host : String, val path : Str
  * @param path      URI part path to resource file.
  * @param nexcomEnvironment Provides an extension data class to specify nexcom environment specifics.
  */
-open class NXNetwork(open var uri : NXUri, open var nexcomEnvironment: NXNexcomEnvironment? = null)
+open class NXNetwork(open var uri : NXUri, open var nexcomEnvironment: NXNexcomEnvironment? = null) : NXJsonEncodable
 {
 
     companion object {
