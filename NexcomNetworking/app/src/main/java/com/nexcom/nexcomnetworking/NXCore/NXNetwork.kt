@@ -1,6 +1,8 @@
 package com.nexcom.NXCore
 
+import android.content.Context
 import com.github.kittinunf.fuel.core.FuelError
+import com.github.kittinunf.fuel.core.requests.write
 import com.github.kittinunf.fuel.httpGet
 
 /**
@@ -134,6 +136,19 @@ open class NXNetwork(open var uri : NXUri, open var nexcomEnvironment: NXNexcomE
          */
         var defaultNetwork = NXNetwork(NXUri("http://", "evolve.nexcomgroup.com", "/apps/demo/iOS/aspx/json.aspx"))
 
+        fun NXNetwork.Companion.open(context: Context, key: String): NXNetwork {
+
+            val filename = key + ".network"
+
+            return context.openFileInput(filename).bufferedReader().use { fromJson(it.readText()) }
+        }
+
+        fun NXNetwork.Companion.save(context: Context, key: String, network : NXNetwork) {
+
+            val filename = key + ".network"
+
+            context.openFileOutput(filename, Context.MODE_PRIVATE).write(network.toJson())
+        }
     }
 
     /**
