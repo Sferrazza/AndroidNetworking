@@ -136,11 +136,16 @@ open class NXNetwork(open var uri : NXUri, open var nexcomEnvironment: NXNexcomE
          */
         var defaultNetwork = NXNetwork(NXUri("http://", "evolve.nexcomgroup.com", "/apps/demo/iOS/aspx/json.aspx"))
 
-        fun open(context: Context, key: String): NXNetwork {
+        fun open(context: Context, key: String): NXNetwork? {
 
             val filename = key + ".network"
 
-            return context.openFileInput(filename).bufferedReader().use { fromJson(it.readText()) }
+            if (context.fileList().contains(filename)) {
+
+                return context.openFileInput(filename).bufferedReader().use { fromJson(it.readText()) }
+            }
+
+            return null
         }
 
         fun save(context: Context, key: String, network : NXNetwork) {
