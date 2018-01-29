@@ -113,7 +113,7 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
 
             val latestDate = dates.first().refreshDate
 
-            val isAfter = latestDate.after(refreshDate)
+            val isAfter = latestDate.time > refreshDate.time
 
             if (isDebug) {
                 val r = jsonDateFormat.format(refreshDate)
