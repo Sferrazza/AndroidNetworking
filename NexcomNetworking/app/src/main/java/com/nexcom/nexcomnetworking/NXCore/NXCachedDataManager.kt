@@ -9,7 +9,7 @@ import java.util.*
  * Created by danielmeachum on 1/29/18.
  */
 
-class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc : String, val refreshRPC: String, val cacheKey : String? = null, parameters : List<Pair<String,String>>?, method : String = "get") : NXDataManager<T>(network, rpc, parameters, method)
+open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc : String, val refreshRPC: String, val cacheKey : String? = null, parameters : List<Pair<String,String>>?, method : String = "get") : NXDataManager<T>(network, rpc, parameters, method)
 {
     private var fileKey : String
 
@@ -101,13 +101,22 @@ class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc : St
 
         }, errorHandler = errorHandler)
     }
+
+    /**
+     * Caches the raw response.
+     */
+    override fun handleRawResponse(responseString: String) {
+
+        cachedValue = CachedValue(jsonDateFormat.format(Date()),responseString)
+        super.handleRawResponse(responseString)
+    }
 }
 
 /**
  * Wrapper class of a cached value and its cached date.
  * Used by [NXCachedDataManager]
  */
-private data class CachedValue(
+data class CachedValue(
         val dateString : String,
         val valueString : String
 ) : NXJsonEncodable

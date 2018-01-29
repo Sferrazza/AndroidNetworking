@@ -4,10 +4,6 @@ import com.beust.klaxon.*
 import com.github.kittinunf.fuel.core.FuelError
 
 /**
- * Created by danielmeachum on 12/22/17.
- */
-
-/**
  * An abstract base class that provides the foundation for requesting and parsing data class responses.
  * Note: this class should <b>always</b> be subclassed.
  * When subclassing, you <b>must</b> specify the model data class the json string will be parsed into.
@@ -73,6 +69,14 @@ import com.github.kittinunf.fuel.core.FuelError
      }
 
      /**
+      * Helper function for subclasses to call when they need to work with the raw string response.
+      * Called before [parseResponse] method is called.
+      */
+     open fun handleRawResponse(responseString: String) {
+         //Open for subclasses
+     }
+
+     /**
       * Called on subclasses when the parsing of json response string into data models is needed.
       * Due to limitations in Kotlin, subclasses are responsible for parsing models.
       * Call inline fun tableFromJson within this subclassed method to parse data models easily.
@@ -83,11 +87,8 @@ import com.github.kittinunf.fuel.core.FuelError
       * @param {(Error)->Unit}    errorHandler       Allows for adding additional error checking.
       */
      open fun parseResponse(responseString : String, errorHandler: (error:Error) -> Unit): List<T> {
-
          //Should be overridden by subclasses
-         assert(true)
-
-         return listOf()
+         return emptyList()
      }
 
      inline fun <reified T>parseJsonTable(json : String, tableName : String = "Table"): List<T> {
