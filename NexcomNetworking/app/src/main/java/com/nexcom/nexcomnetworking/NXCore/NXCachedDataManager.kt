@@ -115,7 +115,13 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
 
             val isAfter = latestDate.after(refreshDate)
 
-            if (isDebug) { Log.d(LOG_TAG,"RefreshDate($refreshDate) is after ServerDate($latestDate) $isAfter") }
+            if (isDebug) {
+                val r = jsonDateFormat.format(refreshDate)
+                val s = jsonDateFormat.format(latestDate)
+
+
+                Log.d(LOG_TAG,"RefreshDate($r) is after ServerDate($s) $isAfter")
+            }
 
             responseHandler( isAfter )
 
