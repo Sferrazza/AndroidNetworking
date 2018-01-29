@@ -3,6 +3,10 @@ package com.nexcom.nexcomnetworking.NXCore
 import android.content.Context
 import android.util.Log
 import com.nexcom.NXCore.*
+import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import org.jetbrains.anko.coroutines.experimental.bg
 import java.util.*
 
 /**
@@ -18,27 +22,27 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
         fileKey = cacheKey ?: generateFileKey()
     }
 
-    private var cachedValue : CachedValue?
-        get() {
+    private fun getCachedValue():CachedValue? {
 
-            if (context.fileList().contains(fileKey)) {
+        if (context.fileList().contains(fileKey)) {
 
-                val json = context.openFileInput(fileKey).bufferedReader().use { it.readText() }
+            val json = context.openFileInput(fileKey).bufferedReader().use { it.readText() }
 
-                return fromJson(json)
-            }
-
-            return null
+            return fromJson(json)
         }
-        set(value) {
 
-            if (value != null) {
-                context.openFileOutput(fileKey, 0).use { it.write(value.toJson().toByteArray()) }
-            } else {
-                context.deleteFile(fileKey)
-            }
+        return null
+    }
 
+    private fun setCachedValue(value: CachedValue?) {
+
+        if (value != null) {
+            context.openFileOutput(fileKey, 0).use { it.write(value.toJson().toByteArray()) }
+        } else {
+            context.deleteFile(fileKey)
         }
+
+    }
 
     private fun generateFileKey(): String {
 
@@ -60,34 +64,43 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
 
     override fun sendRequest(completionHandler: (models: List<T>) -> Unit, errorHandler: (error: Error) -> Unit) {
 
-        val cachedValue = cachedValue
+        async(UI) {
 
-        if (cachedValue == null) {
+            val dCachedValue : Deferred<CachedValue?> = bg {
 
-            if (isDebug) { Log.d(LOG_TAG,"No cached value exists for RPC $rpc. Calling server...") }
+                getCachedValue()
+            }
 
-            super.sendRequest(completionHandler, errorHandler)
-            return
-        }
+            val cachedValue = dCachedValue.await()
 
-        val refreshDate = jsonDateFormat.parse(cachedValue.dateString)
+            if (cachedValue == null) {
 
-        shouldRefresh(refreshDate, responseHandler = { shouldRefresh ->
-
-            if (shouldRefresh) {
-
-                if (isDebug) { Log.d(LOG_TAG,"Cached value for $fileKey is out of date.") }
+                if (isDebug) { Log.d(LOG_TAG,"No cached value exists for RPC $rpc. Calling server...") }
 
                 super.sendRequest(completionHandler, errorHandler)
+
             }
             else {
-                if (isDebug) { Log.d(LOG_TAG,"Cached value is valid for $fileKey.") }
+                val refreshDate = jsonDateFormat.parse(cachedValue.dateString)
 
-                val models = parseResponse(cachedValue.valueString, errorHandler)
+                shouldRefresh(refreshDate, responseHandler = { shouldRefresh ->
 
-                completionHandler(models)
+                    if (shouldRefresh) {
+
+                        if (isDebug) { Log.d(LOG_TAG,"Cached value for $fileKey is out of date.") }
+
+                        super.sendRequest(completionHandler, errorHandler)
+                    }
+                    else {
+                        if (isDebug) { Log.d(LOG_TAG,"Cached value is valid for $fileKey.") }
+
+                        val models = parseResponse(cachedValue.valueString, errorHandler)
+
+                        completionHandler(models)
+                    }
+                }, errorHandler = errorHandler)
             }
-        }, errorHandler = errorHandler)
+        }
     }
 
     private fun shouldRefresh(refreshDate : Date, responseHandler : (shouldRefresh : Boolean)->Unit, errorHandler: (error: Error) -> Unit) {
@@ -110,7 +123,9 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
      */
     override fun handleRawResponse(responseString: String) {
 
-        cachedValue = CachedValue(jsonDateFormat.format(Date()),responseString)
+        bg {
+            setCachedValue(CachedValue(jsonDateFormat.format(Date()),responseString))
+        }
         super.handleRawResponse(responseString)
     }
 }
