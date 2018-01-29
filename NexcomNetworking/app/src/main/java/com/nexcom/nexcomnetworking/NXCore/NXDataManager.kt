@@ -3,6 +3,8 @@ package com.nexcom.NXCore
 import com.beust.klaxon.*
 import com.github.kittinunf.fuel.core.FuelError
 
+internal val LOG_TAG = "NXDataManager"
+
 /**
  * An abstract base class that provides the foundation for requesting and parsing data class responses.
  * Note: this class should <b>always</b> be subclassed.
@@ -57,6 +59,8 @@ import com.github.kittinunf.fuel.core.FuelError
          request.isDebug = isDebug
 
          request.send(network, completionHandler = { s: String ->
+
+             handleRawResponse(s)
 
              completionHandler(parseResponse(s, errorHandler))
 

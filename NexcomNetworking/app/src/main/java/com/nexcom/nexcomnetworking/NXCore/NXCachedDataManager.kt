@@ -1,6 +1,7 @@
 package com.nexcom.nexcomnetworking.NXCore
 
 import android.content.Context
+import android.util.Log
 import com.nexcom.NXCore.*
 import java.util.*
 
@@ -63,6 +64,8 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
 
         if (cachedValue == null) {
 
+            if (isDebug) { Log.d(LOG_TAG,"No cached value exists for RPC $rpc. Calling server...") }
+
             super.sendRequest(completionHandler, errorHandler)
             return
         }
@@ -73,12 +76,12 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
 
             if (shouldRefresh) {
 
-                println("Cached value for $fileKey is out of date.")
+                if (isDebug) { Log.d(LOG_TAG,"Cached value for $fileKey is out of date.") }
 
                 super.sendRequest(completionHandler, errorHandler)
             }
             else {
-                println("Cached value is valid.")
+                if (isDebug) { Log.d(LOG_TAG,"Cached value is valid for $fileKey.") }
 
                 val models = parseResponse(cachedValue.valueString, errorHandler)
 
