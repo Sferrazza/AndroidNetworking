@@ -134,7 +134,9 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
     override fun handleRawResponse(responseString: String) {
 
         bg {
-            setCachedValue(CachedValue(jsonDateFormat.format(Date()),responseString))
+            val dateString = jsonDateFormat.format(Calendar.getInstance().time)
+
+            setCachedValue(CachedValue(dateString,responseString))
         }
         super.handleRawResponse(responseString)
     }
