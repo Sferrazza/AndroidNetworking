@@ -4,6 +4,8 @@ import android.content.Context
 import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.core.requests.write
 import com.github.kittinunf.fuel.httpGet
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 /**
  * Created by danielmeachum on 12/21/17.
@@ -47,48 +49,55 @@ open class NXNetworkRequest(rpc : String?, parameters: List<Pair<String, String>
      */
     open fun send(withNetwork: NXNetwork? = null, completionHandler : (String)->Unit, errorHandler : (FuelError)->Unit) {
 
-        var manager = withNetwork
-        if (manager == null) {
-            manager = NXNetwork.defaultNetwork
-        }
+        doAsync {
 
-        val initialParameters = parameters ?: listOf()
-
-        var allParameters = initialParameters.toMutableList()
-
-        if (rpc != null) {
-            allParameters.add(Pair("rpc",rpc!!))
-        }
-
-        var environment= manager.nexcomEnvironment
-
-        if (environment!= null) {
-
-            allParameters.addAll(listOf("sitetoken" to environment.sitetoken, "sessionid" to environment.sessionid))
-        }
-
-        val urlString = manager.urlString
-
-        urlString.httpGet(allParameters).responseString { _, response, result ->
-
-            if (isDebug) {
-
-                println("URL Request: " + urlString)
-                println("Response: " + response.toString())
+            var manager = withNetwork
+            if (manager == null) {
+                manager = NXNetwork.defaultNetwork
             }
 
+            val initialParameters = parameters ?: listOf()
 
-            val (json, error) = result
+            var allParameters = initialParameters.toMutableList()
 
-            if (json != null) {
-
-                completionHandler(json)
+            if (rpc != null) {
+                allParameters.add(Pair("rpc",rpc!!))
             }
-            else if (error != null) {
 
-                println("Error getting json " + error)
+            var environment= manager.nexcomEnvironment
 
-                errorHandler(error)
+            if (environment!= null) {
+
+                allParameters.addAll(listOf("sitetoken" to environment.sitetoken, "sessionid" to environment.sessionid))
+            }
+
+            val urlString = manager.urlString
+
+            urlString.httpGet(allParameters).responseString { _, response, result ->
+
+                if (isDebug) {
+
+                    println("URL Request: " + urlString)
+                    println("Response: " + response.toString())
+                }
+
+
+                val (json, error) = result
+
+                if (json != null) {
+
+                    uiThread {
+                        completionHandler(json)
+                    }
+                }
+                else if (error != null) {
+
+                    println("Error getting json " + error)
+
+                    uiThread {
+                        errorHandler(error)
+                    }
+                }
             }
         }
     }
@@ -136,7 +145,14 @@ open class NXNetwork(open var uri : NXUri, open var nexcomEnvironment: NXNexcomE
          */
         var defaultNetwork = NXNetwork(NXUri("http://", "evolve.nexcomgroup.com", "/apps/demo/iOS/aspx/json.aspx"))
 
+        private var cachedNetworks = mutableMapOf<String,NXNetwork>()
+
         fun open(context: Context, key: String): NXNetwork? {
+
+            if (cachedNetworks.contains(key)) {
+
+                return cachedNetworks[key]
+            }
 
             val filename = key + ".network"
 
@@ -153,6 +169,8 @@ open class NXNetwork(open var uri : NXUri, open var nexcomEnvironment: NXNexcomE
             val filename = key + ".network"
 
             context.openFileOutput(filename, Context.MODE_PRIVATE).write(network.toJson())
+
+            cachedNetworks[key] = network
         }
     }
 

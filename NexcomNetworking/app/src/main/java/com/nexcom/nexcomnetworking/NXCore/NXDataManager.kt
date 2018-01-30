@@ -2,6 +2,9 @@ package com.nexcom.NXCore
 
 import com.beust.klaxon.*
 import com.github.kittinunf.fuel.core.FuelError
+import org.jetbrains.anko.coroutines.experimental.bg
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 internal val LOG_TAG = "NXDataManager"
 
@@ -60,15 +63,27 @@ internal val LOG_TAG = "NXDataManager"
 
          request.send(network, completionHandler = { s: String ->
 
-             handleRawResponse(s)
+             doAsync {
 
-             completionHandler(parseResponse(s, errorHandler))
+                 handleRawResponse(s)
+
+                 val models = parseResponse(s, errorHandler)
+
+                 uiThread {
+                     completionHandler(models)
+                 }
+             }
 
          }, errorHandler = { error: FuelError ->
 
-             val e = Error(error.localizedMessage)
+             doAsync {
 
-             errorHandler(e)
+                 val e = Error(error.localizedMessage)
+
+                 uiThread {
+                     errorHandler(e)
+                 }
+             }
          })
      }
 
