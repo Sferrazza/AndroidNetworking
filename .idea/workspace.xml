@@ -2,14 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3cea01fc-cb82-4405-90d5-6d929ebd87b8" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/AndroidNetworking.iml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/NexcomNetworking/.idea/caches/build_file_checksums.ser" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/NexcomNetworking/.idea/codeStyles/Project.xml" />
-      <change beforePath="$PROJECT_DIR$/NexcomNetworking/.idea/modules.xml" afterPath="$PROJECT_DIR$/NexcomNetworking/.idea/modules.xml" />
       <change beforePath="$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXNetwork.kt" afterPath="$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXNetwork.kt" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,8 +26,8 @@
       <file leaf-file-name="NXNetwork.kt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXNetwork.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="113" column="7" lean-forward="true" selection-start-line="113" selection-start-column="7" selection-end-line="113" selection-end-column="7" />
+            <state relative-caret-position="127">
+              <caret line="100" column="13" lean-forward="true" selection-start-line="100" selection-start-column="13" selection-end-line="100" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -393,8 +385,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXNetwork.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="113" column="7" lean-forward="true" selection-start-line="113" selection-start-column="7" selection-end-line="113" selection-end-column="7" />
+        <state relative-caret-position="127">
+          <caret line="100" column="13" lean-forward="true" selection-start-line="100" selection-start-column="13" selection-end-line="100" selection-end-column="13" />
           <folding />
         </state>
       </provider>

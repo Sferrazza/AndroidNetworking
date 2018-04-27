@@ -112,7 +112,7 @@ open class NXNetworkRequest(rpc : String?, parameters: List<Pair<String, String>
      * @param completionHandler   If request returns a response, completionHandler is called with response as a ByteArray. Use when downloading image or PDF data from server.
      * @param errorHandler        Allows for handling of networking errors.
      */
-    open fun send(withNetwork: NXNetwork? = null, dataCompletionHandler : (ByteArray)->Unit, errorHandler : (FuelError)->Unit) {
+    open fun sendWithDataResponse(withNetwork: NXNetwork? = null, dataCompletionHandler : (ByteArray)->Unit, errorHandler : (FuelError)->Unit) {
 
         doAsync {
 
