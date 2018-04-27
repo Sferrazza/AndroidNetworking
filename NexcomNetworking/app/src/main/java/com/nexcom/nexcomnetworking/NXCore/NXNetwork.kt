@@ -101,6 +101,71 @@ open class NXNetworkRequest(rpc : String?, parameters: List<Pair<String, String>
             }
         }
     }
+
+    /**
+     * Sends network request to server. Allows for inline completion and error handling.
+     * Note: completion handler returns the a raw ByteArray of the response.
+     * Passing in a network network allows inline customization of the server, sitetoken, sessionid, etc. If left null (as default), the default network will be used.
+     * In addition to parameters passed in constructor, network network parameters such as sitetoken, sessionid, rpc, are added into the list of parameters in request.
+     *
+     * @param withNetwork         Specific network network to use. If null, NXNetwork.evolveJsonManager is used.
+     * @param completionHandler   If request returns a response, completionHandler is called with response as a ByteArray. Use when downloading image or PDF data from server.
+     * @param errorHandler        Allows for handling of networking errors.
+     */
+    open fun send(withNetwork: NXNetwork? = null, dataCompletionHandler : (ByteArray)->Unit, errorHandler : (FuelError)->Unit) {
+
+        doAsync {
+
+            var manager = withNetwork
+            if (manager == null) {
+                manager = NXNetwork.defaultNetwork
+            }
+
+            val initialParameters = parameters ?: listOf()
+
+            var allParameters = initialParameters.toMutableList()
+
+            if (rpc != null) {
+                allParameters.add(Pair("rpc",rpc!!))
+            }
+
+            var environment= manager.nexcomEnvironment
+
+            if (environment!= null) {
+
+                allParameters.addAll(listOf("sitetoken" to environment.sitetoken, "sessionid" to environment.sessionid))
+            }
+
+            val urlString = manager.urlString
+
+            urlString.httpGet(allParameters).response { _, response, result ->
+
+                if (isDebug) {
+
+                    println("URL Request: " + urlString)
+                    println("Response: " + response.toString())
+                }
+
+
+                val (byteArray, error) = result
+
+                if (byteArray != null) {
+
+                    uiThread {
+                        dataCompletionHandler(byteArray)
+                    }
+                }
+                else if (error != null) {
+
+                    println("Error getting byteArray " + error)
+
+                    uiThread {
+                        errorHandler(error)
+                    }
+                }
+            }
+        }
+    }
 }
 
 /**
