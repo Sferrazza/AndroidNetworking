@@ -7,6 +7,8 @@ import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
+import org.joda.time.LocalDate
+import java.time.LocalDateTime
 import java.util.*
 
 /**
@@ -81,7 +83,7 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
 
             }
             else {
-                val refreshDate = jsonDateFormat.parse(cachedValue.dateString)
+                val refreshDate = org.joda.time.LocalDateTime(cachedValue.dateString)
 
                 shouldRefresh(refreshDate, responseHandler = { shouldRefresh ->
 
@@ -103,7 +105,7 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
         }
     }
 
-    private fun shouldRefresh(refreshDate : Date, responseHandler : (shouldRefresh : Boolean)->Unit, errorHandler: (error: Error) -> Unit) {
+    private fun shouldRefresh(refreshDate : org.joda.time.LocalDateTime, responseHandler : (shouldRefresh : Boolean)->Unit, errorHandler: (error: Error) -> Unit) {
 
         val dataManager = NXRefreshDateDataManager(network,refreshRPC,parameters)
 
@@ -111,16 +113,16 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
 
         dataManager.sendRequest(completionHandler = { dates ->
 
-            val latestDate = dates.first().refreshDate
+            val latestDate = org.joda.time.LocalDateTime(dates.first().refreshDate)
 
-            val isAfter = latestDate.time > refreshDate.time
+            val isAfter = latestDate.isAfter(refreshDate)
 
             if (isDebug) {
                 val r = jsonDateFormat.format(refreshDate)
                 val s = jsonDateFormat.format(latestDate)
 
 
-                Log.d(LOG_TAG,"ServerDate($s {${latestDate.time}}) is after RefreshDate($r {${refreshDate.time}}) $isAfter")
+                Log.d(LOG_TAG,"ServerDate($s {$latestDate}) is after RefreshDate($r {$refreshDate}) $isAfter")
             }
 
             responseHandler( isAfter )
@@ -134,7 +136,7 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
     override fun handleRawResponse(responseString: String) {
 
         bg {
-            val dateString = jsonDateFormat.format(Calendar.getInstance().time)
+            val dateString = org.joda.time.LocalDateTime.now().toString()
 
             setCachedValue(CachedValue(dateString,responseString))
         }
