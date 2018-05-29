@@ -12,7 +12,7 @@ import java.util.*
 
 val jsonDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.US)
 
-fun Date.toJsonString(): String {
+fun LocalDateTime.toJsonString(): String {
 
     return jsonDateFormat.format(this)
 }
@@ -22,23 +22,20 @@ annotation class NXDate
 
 
 fun nxJsonParser() = Klaxon()
-        .converter(object  : Converter<Date> {
+        .converter(object  : Converter {
 
-            override fun canConvert(cls: Class<*>) = cls == NXDate::class.java
+            override fun canConvert(cls: Class<*>) = cls == LocalDateTime::class.java
 
-            override fun fromJson(jv: JsonValue): Date{
+            override fun fromJson(jv: JsonValue) =
+                    if (jv.string != null) {
+                        LocalDateTime.parse(jv.string, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+                    } else {
+                        throw KlaxonException("Couldn't parse date: ${jv.string}")
+                    }
 
-                if (jv.string != null){
-
-                    return jsonDateFormat.parse(jv.string)
-                }
-                else {
-                    throw KlaxonException("Couldn't parse date " + jv.string)
-                }
-            }
-
-            override fun toJson(value: Date): String? {
-
-                return value.toJsonString()
+            override fun toJson(o: Any)
+                    = when (o) {
+                is LocalDateTime -> o.toJsonString()
+                else -> o.toString()
             }
         })
