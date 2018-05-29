@@ -14,7 +14,7 @@ val jsonDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.US)
 
 fun LocalDateTime.toJsonString(): String {
 
-    return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(this)
+    return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(this)
 }
 
 @Target(AnnotationTarget.FIELD)
@@ -28,7 +28,7 @@ fun nxJsonParser() = Klaxon()
 
             override fun fromJson(jv: JsonValue) =
                     if (jv.string != null) {
-                        LocalDateTime.parse(jv.string, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+                        LocalDateTime.parse(jv.string, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
                     } else {
                         throw KlaxonException("Couldn't parse date: ${jv.string}")
                     }
