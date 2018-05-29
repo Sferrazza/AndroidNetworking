@@ -22,7 +22,7 @@ annotation class NXDate
 
 
 fun nxJsonParser() = Klaxon()
-        .converter(object  : Converter {
+        .fieldConverter(NXDate::class,object  : Converter {
 
             override fun canConvert(cls: Class<*>) = cls == LocalDateTime::class.java
 
