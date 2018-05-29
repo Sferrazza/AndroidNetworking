@@ -14,7 +14,7 @@ val jsonDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.US)
 
 fun LocalDateTime.toJsonString(): String {
 
-    return toString("yyyy-MM-dd HH:mm")
+    return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(this)
 }
 
 @Target(AnnotationTarget.FIELD)
