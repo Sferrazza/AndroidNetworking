@@ -3,6 +3,7 @@ package com.nexcom.nexcomnetworking.NXCore
 import com.beust.klaxon.Json
 import com.nexcom.NXCore.NXDate
 import java.util.*
+import java.time.LocalDateTime
 
 /**
  * Data class representing the return of a refresh procedure.
