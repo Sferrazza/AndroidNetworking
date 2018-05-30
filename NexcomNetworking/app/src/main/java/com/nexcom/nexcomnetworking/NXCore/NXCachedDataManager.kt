@@ -3,6 +3,7 @@ package com.nexcom.nexcomnetworking.NXCore
 import android.content.Context
 import android.util.Log
 import com.nexcom.NXCore.*
+import com.nexcom.NXCore.NXDate
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
