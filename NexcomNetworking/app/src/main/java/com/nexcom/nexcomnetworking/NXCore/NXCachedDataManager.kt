@@ -83,7 +83,7 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
 
             }
             else {
-                val refreshDate = org.joda.time.LocalDateTime(cachedValue.dateString)
+                val refreshDate = LocalDateTime(cachedValue.dateString)
 
                 shouldRefresh(refreshDate, responseHandler = { shouldRefresh ->
 
@@ -105,7 +105,7 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
         }
     }
 
-    private fun shouldRefresh(refreshDate : org.joda.time.LocalDateTime, responseHandler : (shouldRefresh : Boolean)->Unit, errorHandler: (error: Error) -> Unit) {
+    private fun shouldRefresh(refreshDate : LocalDateTime, responseHandler : (shouldRefresh : Boolean)->Unit, errorHandler: (error: Error) -> Unit) {
 
         val dataManager = NXRefreshDateDataManager(network,refreshRPC,parameters)
 
@@ -113,7 +113,7 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
 
         dataManager.sendRequest(completionHandler = { dates ->
 
-            val latestDate = org.joda.time.LocalDateTime(dates.first().refreshDate)
+            val latestDate = LocalDateTime(dates.first().refreshDate)
 
             val isAfter = latestDate.isAfter(refreshDate)
 
@@ -132,7 +132,7 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
     override fun handleRawResponse(responseString: String) {
 
         bg {
-            val dateString = org.joda.time.LocalDateTime.now().toString()
+            val dateString = LocalDateTime.now().toString()
 
             setCachedValue(CachedValue(dateString,responseString))
         }

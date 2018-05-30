@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3cea01fc-cb82-4405-90d5-6d929ebd87b8" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXDate.kt" afterPath="$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXDate.kt" />
+      <change beforePath="$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXCachedDataManager.kt" afterPath="$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXCachedDataManager.kt" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -13,21 +13,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="NXDataManager.kt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXDataManager.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NXNetwork.kt" pinned="false" current-in-tab="false">
+      <file leaf-file-name="NXNetwork.kt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXNetwork.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="162" column="43" lean-forward="false" selection-start-line="162" selection-start-column="43" selection-end-line="162" selection-end-column="43" />
+            <state relative-caret-position="162">
+              <caret line="203" column="22" lean-forward="true" selection-start-line="203" selection-start-column="22" selection-end-line="203" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -43,14 +33,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NXDate.kt" pinned="false" current-in-tab="true">
+      <file leaf-file-name="NXDate.kt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXDate.kt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="245">
-              <caret line="24" column="59" lean-forward="true" selection-start-line="24" selection-start-column="59" selection-end-line="24" selection-end-column="59" />
+              <caret line="24" column="59" lean-forward="false" selection-start-line="24" selection-start-column="59" selection-end-line="24" selection-end-column="59" />
               <folding>
                 <element signature="e#27#178#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NXCachedDataManager.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXCachedDataManager.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1875">
+              <caret line="134" column="29" lean-forward="false" selection-start-line="134" selection-start-column="29" selection-end-line="134" selection-end-column="29" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -73,14 +73,16 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXNetwork.kt" />
         <option value="$PROJECT_DIR$/NexcomNetworking/build.gradle" />
         <option value="$PROJECT_DIR$/NexcomNetworking/app/build.gradle" />
         <option value="$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXDate.kt" />
+        <option value="$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXCachedDataManager.kt" />
+        <option value="$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXNetwork.kt" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="58" />
     <option name="y" value="23" />
     <option name="width" value="1637" />
     <option name="height" value="1027" />
@@ -314,7 +316,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1637" height="1027" extended-state="6" />
+    <frame x="58" y="23" width="1637" height="1027" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -368,14 +370,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXDataManager.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/NexcomNetworking/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -416,14 +410,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXNetwork.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="162" column="43" lean-forward="false" selection-start-line="162" selection-start-column="43" selection-end-line="162" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/NexcomNetworking/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="20">
@@ -435,10 +421,34 @@
     <entry file="file://$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXDate.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="245">
-          <caret line="24" column="59" lean-forward="true" selection-start-line="24" selection-start-column="59" selection-end-line="24" selection-end-column="59" />
+          <caret line="24" column="59" lean-forward="false" selection-start-line="24" selection-start-column="59" selection-end-line="24" selection-end-column="59" />
           <folding>
             <element signature="e#27#178#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXCachedDataManager.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1875">
+          <caret line="134" column="29" lean-forward="false" selection-start-line="134" selection-start-column="29" selection-end-line="134" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXDataManager.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1255">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NexcomNetworking/app/src/main/java/com/nexcom/nexcomnetworking/NXCore/NXNetwork.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="203" column="22" lean-forward="true" selection-start-line="203" selection-start-column="22" selection-end-line="203" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>
