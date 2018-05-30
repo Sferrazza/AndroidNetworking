@@ -83,7 +83,7 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
 
             }
             else {
-                val refreshDate = LocalDateTime(cachedValue.dateString)
+                val refreshDate = LocalDateTime.dateFrom(cachedValue.dateString)
 
                 shouldRefresh(refreshDate, responseHandler = { shouldRefresh ->
 
@@ -113,7 +113,7 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
 
         dataManager.sendRequest(completionHandler = { dates ->
 
-            val latestDate = LocalDateTime(dates.first().refreshDate)
+            val latestDate = dates.first().refreshDate
 
             val isAfter = latestDate.isAfter(refreshDate)
 

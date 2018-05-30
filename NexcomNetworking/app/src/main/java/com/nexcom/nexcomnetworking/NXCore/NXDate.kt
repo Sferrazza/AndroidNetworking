@@ -17,6 +17,11 @@ fun LocalDateTime.toJsonString(): String {
     return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(this)
 }
 
+fun LocalDateTime.dateFrom(string: String): LocalDateTime {
+
+    return LocalDateTime.parse(jv.string, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+}
+
 @Target(AnnotationTarget.FIELD)
 annotation class NXDate
 

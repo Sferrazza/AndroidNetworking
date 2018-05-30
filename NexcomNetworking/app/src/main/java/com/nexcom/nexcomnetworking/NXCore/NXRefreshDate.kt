@@ -11,5 +11,5 @@ import java.util.*
  */
 data class NXRefreshDate(
         @NXDate
-        @Json(name = "refresh_date") val refreshDate: Date
+        @Json(name = "refresh_date") val refreshDate: LocalDateTime
 )
