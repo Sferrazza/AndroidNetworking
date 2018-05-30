@@ -19,7 +19,7 @@ fun LocalDateTime.toJsonString(): String {
 
 fun LocalDateTime.dateFrom(string: String): LocalDateTime {
 
-    return LocalDateTime.parse(jv.string, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+    return LocalDateTime.parse(string, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 }
 
 @Target(AnnotationTarget.FIELD)
