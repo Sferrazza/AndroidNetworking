@@ -10,16 +10,16 @@ import java.util.*
  * Created by danielmeachum on 1/4/18.
  */
 
-val jsonDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.US)
+val jsonDateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
 
 fun LocalDateTime.toJsonString(): String {
 
-    return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(this)
+    return DateTimeFormatter.ofPattern(jsonDateFormat).format(this)
 }
 
-fun LocalDateTime.dateFrom(string: String): LocalDateTime {
+fun String.toLocalDateTime(): LocalDateTime {
 
-    return LocalDateTime.parse(string, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+    return LocalDateTime.parse(this, DateTimeFormatter.ofPattern(jsonDateFormat))
 }
 
 @Target(AnnotationTarget.FIELD)
@@ -33,14 +33,14 @@ fun nxJsonParser() = Klaxon()
 
             override fun fromJson(jv: JsonValue) =
                     if (jv.string != null) {
-                        LocalDateTime.parse(jv.string, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                        LocalDateTime.parse(jv.string, DateTimeFormatter.ofPattern(jsonDateFormat))
                     } else {
                         throw KlaxonException("Couldn't parse date: ${jv.string}")
                     }
 
-            override fun toJson(o: Any)
-                    = when (o) {
-                is LocalDateTime -> o.toJsonString()
-                else -> o.toString()
+            override fun toJson(value: Any)
+                    = when (value) {
+                is LocalDateTime -> value.toJsonString()
+                else -> value.toString()
             }
         })

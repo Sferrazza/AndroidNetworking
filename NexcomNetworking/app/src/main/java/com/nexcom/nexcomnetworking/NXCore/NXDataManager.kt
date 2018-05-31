@@ -2,6 +2,7 @@ package com.nexcom.NXCore
 
 import com.beust.klaxon.*
 import com.github.kittinunf.fuel.core.FuelError
+import com.nexcom.nexcomnetworking.NXCore.NXNetworkOptions
 import org.jetbrains.anko.coroutines.experimental.bg
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -23,14 +24,10 @@ internal val LOG_TAG = "NXDataManager"
  *
  * @type {NXDataManager}
  */
- open class NXDataManager<T>(network: NXNetwork? = null, rpc : String?, parameters: List<Pair<String, String>>? = null, method : String = "get")
+ open class NXDataManager<T>(val options: NXNetworkOptions)
  {
 
-     public var network = network
-     public var rpc = rpc
-     public var parameters = parameters
-     public var method = method
-     public var isDebug = false
+     constructor(network: NXNetwork? = null, rpc : String?, parameters: List<Pair<String, String>>? = null, method : String = "get") : this(NXNetworkOptions(rpc, parameters, method, false,null,network))
 
      /**
       * Simple constructor for an rpc that takes no arguments (other than environment defaults).
@@ -57,11 +54,9 @@ internal val LOG_TAG = "NXDataManager"
       */
      open fun sendRequest(completionHandler: (models: List<T>) -> Unit, errorHandler: (error:Error) -> Unit) {
 
-         val request = NXNetworkRequest(rpc, parameters, method)
+         val request = NXNetworkRequest(options = options)
 
-         request.isDebug = isDebug
-
-         request.send(network, completionHandler = { s: String ->
+         request.send(completionHandler = { s: String ->
 
              doAsync {
 

@@ -4,6 +4,7 @@ import android.content.Context
 import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.core.requests.write
 import com.github.kittinunf.fuel.httpGet
+import com.nexcom.nexcomnetworking.NXCore.NXNetworkOptions
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
@@ -27,15 +28,13 @@ import org.jetbrains.anko.uiThread
   * @see NXDataManager
   *
 */
-open class NXNetworkRequest(rpc : String?, parameters: List<Pair<String, String>>? = null, method : String = "get")
+open class NXNetworkRequest(val options: NXNetworkOptions)
 {
-    var rpc = rpc
+    constructor(rpc : String?, parameters: List<Pair<String, String>>? = null, method : String = "get") : this(NXNetworkOptions(rpc, parameters, method))
 
-    var parameters = parameters
-
-    var method = method
-
-    var isDebug = false
+    var isDebug : Boolean
+    get() {return options.isDebug}
+    set(value) {options.isDebug = value}
 
     /**
      * Sends network request to server. Allows for inline completion and error handling.
@@ -47,21 +46,21 @@ open class NXNetworkRequest(rpc : String?, parameters: List<Pair<String, String>
      * @param completionHandler   If request returns a response, completionHandler is called with response as String value.
      * @param errorHandler        Allows for handling of networking errors.
      */
-    open fun send(withNetwork: NXNetwork? = null, completionHandler : (String)->Unit, errorHandler : (FuelError)->Unit) {
+    open fun send(completionHandler : (String)->Unit, errorHandler : (FuelError)->Unit) {
 
         doAsync {
 
-            var manager = withNetwork
+            var manager = options.network
             if (manager == null) {
                 manager = NXNetwork.defaultNetwork
             }
 
-            val initialParameters = parameters ?: listOf()
+            val initialParameters = options.parameters ?: listOf()
 
             var allParameters = initialParameters.toMutableList()
 
-            if (rpc != null) {
-                allParameters.add(Pair("rpc",rpc!!))
+            if (options.rpc != null) {
+                allParameters.add(Pair("rpc",options.rpc!!))
             }
 
             var environment= manager.nexcomEnvironment
@@ -112,21 +111,29 @@ open class NXNetworkRequest(rpc : String?, parameters: List<Pair<String, String>
      * @param completionHandler   If request returns a response, completionHandler is called with response as a ByteArray. Use when downloading image or PDF data from server.
      * @param errorHandler        Allows for handling of networking errors.
      */
-    open fun sendWithDataResponse(withNetwork: NXNetwork? = null, dataCompletionHandler : (ByteArray)->Unit, errorHandler : (FuelError)->Unit) {
+    open fun sendWithDataResponse(dataCompletionHandler : (ByteArray)->Unit, errorHandler : (FuelError)->Unit) {
 
         doAsync {
 
-            var manager = withNetwork
+            var manager = options.network
             if (manager == null) {
                 manager = NXNetwork.defaultNetwork
             }
 
-            val initialParameters = parameters ?: listOf()
+            val initialParameters = options.parameters ?: listOf()
 
             var allParameters = initialParameters.toMutableList()
 
-            if (rpc != null) {
-                allParameters.add(Pair("rpc",rpc!!))
+            if (options.rpc != null) {
+                allParameters.add(Pair("rpc",options.rpc!!))
+            }
+
+            if (options.isDebug) {
+                allParameters.add("debug" to "1")
+            }
+
+            options.debugDescription?.let {
+                allParameters.add("debugDesc" to it)
             }
 
             var environment= manager.nexcomEnvironment
@@ -208,7 +215,7 @@ open class NXNetwork(open var uri : NXUri, open var nexcomEnvironment: NXNexcomE
          * Note: specific Evolve environments should be configured in individual projects.
          * @type {NXNetwork}
          */
-        var defaultNetwork = NXNetwork(NXUri("http://", "evolve.nexcomgroup.com", "/apps/demo/iOS/aspx/json.aspx"))
+        var defaultNetwork = NXNetwork(NXUri("http://", "evolve.nexcomgroup.com", "/apps/demo/iOS/aspx/dataAdapter.aspx"))
 
         private var cachedNetworks = mutableMapOf<String,NXNetwork>()
 

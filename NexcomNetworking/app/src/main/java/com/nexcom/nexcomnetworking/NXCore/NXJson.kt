@@ -2,6 +2,8 @@ package com.nexcom.NXCore
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by danielmeachum on 1/8/18.
@@ -10,7 +12,7 @@ import com.google.gson.GsonBuilder
 open class NXModelParser
 {
     val gson: Gson
-        get() = GsonBuilder().setDateFormat(jsonDateFormat.toLocalizedPattern()).create()
+        get() = GsonBuilder().setDateFormat(SimpleDateFormat(jsonDateFormat, Locale.US).toLocalizedPattern()).create()
 
     /**
      * Parses model into JSON string. Uses Nexcom's compatible date format.

@@ -3,12 +3,10 @@ package com.nexcom.nexcomnetworking.NXCore
 import android.content.Context
 import android.util.Log
 import com.nexcom.NXCore.*
-import com.nexcom.NXCore.NXDate
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
-import org.joda.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 
@@ -49,7 +47,7 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
 
     private fun generateFileKey(): String {
 
-        val parameters = parameters
+        val parameters = options.parameters
 
         var parameterString = ""
 
@@ -62,7 +60,7 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
             }.joinToString("|")
         }
 
-        return "CachedRPC($rpc)RefreshRPC($refreshRPC)Parameters($parameterString).cache"
+        return "CachedRPC($options.rpc)RefreshRPC($refreshRPC)Parameters($parameterString).cache"
     }
 
     override fun sendRequest(completionHandler: (models: List<T>) -> Unit, errorHandler: (error: Error) -> Unit) {
@@ -78,24 +76,24 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
 
             if (cachedValue == null) {
 
-                if (isDebug) { Log.d(LOG_TAG,"No cached value exists for RPC $rpc. Calling server...") }
+                if (options.isDebug) { Log.d(LOG_TAG,"No cached value exists for RPC $options.rpc. Calling server...") }
 
                 super.sendRequest(completionHandler, errorHandler)
 
             }
             else {
-                val refreshDate = LocalDateTime.dateFrom(cachedValue.dateString)
+                val refreshDate = cachedValue.dateString.toLocalDateTime()
 
                 shouldRefresh(refreshDate, responseHandler = { shouldRefresh ->
 
                     if (shouldRefresh) {
 
-                        if (isDebug) { Log.d(LOG_TAG,"Cached value for $fileKey is out of date.") }
+                        if (options.isDebug) { Log.d(LOG_TAG,"Cached value for $fileKey is out of date.") }
 
                         super.sendRequest(completionHandler, errorHandler)
                     }
                     else {
-                        if (isDebug) { Log.d(LOG_TAG,"Cached value is valid for $fileKey.") }
+                        if (options.isDebug) { Log.d(LOG_TAG,"Cached value is valid for $fileKey.") }
 
                         val models = parseResponse(cachedValue.valueString, errorHandler)
 
@@ -108,9 +106,9 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
 
     private fun shouldRefresh(refreshDate : LocalDateTime, responseHandler : (shouldRefresh : Boolean)->Unit, errorHandler: (error: Error) -> Unit) {
 
-        val dataManager = NXRefreshDateDataManager(network,refreshRPC,parameters)
+        val dataManager = NXRefreshDateDataManager(options.network,refreshRPC,options.parameters)
 
-        dataManager.isDebug = true
+        dataManager.options.isDebug = true
 
         dataManager.sendRequest(completionHandler = { dates ->
 
@@ -118,7 +116,7 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
 
             val isAfter = latestDate.isAfter(refreshDate)
 
-            if (isDebug) {
+            if (options.isDebug) {
                 Log.d(LOG_TAG,"ServerDate({$latestDate}) is after RefreshDate({$refreshDate}) $isAfter")
             }
 
