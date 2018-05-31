@@ -11,12 +11,12 @@ import java.util.*
  * Created by danielmeachum on 1/4/18.
  */
 
-val jsonDateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+val jsonDateFormat = "yyyy-MM-dd'T'HH:mm:ssXXX"
 val jsonDateOnlyFormat = "yyyy-MM-dd"
 
 fun ZonedDateTime.toJsonString(): String {
 
-    return DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(this)
+    return DateTimeFormatter.ofPattern(jsonDateFormat).format(this)
 }
 
 fun String.toZonedDateTime(): ZonedDateTime {
@@ -26,7 +26,7 @@ fun String.toZonedDateTime(): ZonedDateTime {
 
 fun LocalDate.toJsonString(): String {
 
-    return DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(this)
+    return DateTimeFormatter.ofPattern(jsonDateFormat).format(this)
 }
 
 fun String.toLocalDate(): LocalDate {
