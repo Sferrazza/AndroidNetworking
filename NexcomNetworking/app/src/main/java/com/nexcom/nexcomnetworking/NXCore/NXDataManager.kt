@@ -27,6 +27,10 @@ internal val LOG_TAG = "NXDataManager"
  open class NXDataManager<T>(val options: NXNetworkOptions)
  {
 
+     var isDebug : Boolean
+         get() {return options.isDebug}
+         set(value) {options.isDebug = value}
+     
      constructor(network: NXNetwork? = null, rpc : String?, parameters: List<Pair<String, String>>? = null, method : String = "get") : this(NXNetworkOptions(rpc, parameters, method, false,null,network))
 
      /**
