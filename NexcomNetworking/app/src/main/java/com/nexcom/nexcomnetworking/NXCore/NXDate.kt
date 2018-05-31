@@ -16,7 +16,7 @@ val jsonDateOnlyFormat = "yyyy-MM-dd"
 
 fun ZonedDateTime.toJsonString(): String {
 
-    return DateTimeFormatter.ofPattern(jsonDateFormat).format(this)
+    return DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(this)
 }
 
 fun String.toZonedDateTime(): ZonedDateTime {
@@ -26,7 +26,7 @@ fun String.toZonedDateTime(): ZonedDateTime {
 
 fun LocalDate.toJsonString(): String {
 
-    return DateTimeFormatter.ofPattern(jsonDateFormat).format(this)
+    return DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(this)
 }
 
 fun String.toLocalDate(): LocalDate {
