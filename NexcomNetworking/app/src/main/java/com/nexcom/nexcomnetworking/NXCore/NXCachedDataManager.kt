@@ -7,7 +7,7 @@ import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 
 /**
@@ -82,7 +82,7 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
 
             }
             else {
-                val refreshDate = cachedValue.dateString.toLocalDateTime()
+                val refreshDate = cachedValue.dateString.toZonedDateTime()
 
                 shouldRefresh(refreshDate, responseHandler = { shouldRefresh ->
 
@@ -104,7 +104,7 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
         }
     }
 
-    private fun shouldRefresh(refreshDate : LocalDateTime, responseHandler : (shouldRefresh : Boolean)->Unit, errorHandler: (error: Error) -> Unit) {
+    private fun shouldRefresh(refreshDate : ZonedDateTime, responseHandler : (shouldRefresh : Boolean)->Unit, errorHandler: (error: Error) -> Unit) {
 
         val dataManager = NXRefreshDateDataManager(options.network,refreshRPC,options.parameters)
 
@@ -131,7 +131,7 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
     override fun handleRawResponse(responseString: String) {
 
         bg {
-            val dateString = LocalDateTime.now().toString()
+            val dateString = ZonedDateTime.now().toString()
 
             setCachedValue(CachedValue(dateString,responseString))
         }

@@ -3,7 +3,7 @@ package com.nexcom.nexcomnetworking.NXCore
 import com.beust.klaxon.Json
 import com.nexcom.NXCore.NXDate
 import java.util.*
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 
 /**
  * Data class representing the return of a refresh procedure.
@@ -12,5 +12,5 @@ import java.time.LocalDateTime
  */
 data class NXRefreshDate(
         @NXDate
-        @Json(name = "refresh_date") val refreshDate: LocalDateTime
+        @Json(name = "refresh_date") val refreshDate: ZonedDateTime
 )

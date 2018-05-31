@@ -2,7 +2,7 @@ package com.nexcom.NXCore
 
 import com.beust.klaxon.*
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -12,14 +12,14 @@ import java.util.*
 
 val jsonDateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
 
-fun LocalDateTime.toJsonString(): String {
+fun ZonedDateTime.toJsonString(): String {
 
     return DateTimeFormatter.ofPattern(jsonDateFormat).format(this)
 }
 
-fun String.toLocalDateTime(): LocalDateTime {
+fun String.toZonedDateTime(): ZonedDateTime {
 
-    return LocalDateTime.parse(this, DateTimeFormatter.ofPattern(jsonDateFormat))
+    return ZonedDateTime.parse(this, DateTimeFormatter.ofPattern(jsonDateFormat))
 }
 
 @Target(AnnotationTarget.FIELD)
@@ -29,18 +29,18 @@ annotation class NXDate
 fun nxJsonParser() = Klaxon()
         .fieldConverter(NXDate::class,object  : Converter {
 
-            override fun canConvert(cls: Class<*>) = cls == LocalDateTime::class.java
+            override fun canConvert(cls: Class<*>) = cls == ZonedDateTime::class.java
 
             override fun fromJson(jv: JsonValue) =
                     if (jv.string != null) {
-                        LocalDateTime.parse(jv.string, DateTimeFormatter.ofPattern(jsonDateFormat))
+                        ZonedDateTime.parse(jv.string, DateTimeFormatter.ofPattern(jsonDateFormat))
                     } else {
                         throw KlaxonException("Couldn't parse date: ${jv.string}")
                     }
 
             override fun toJson(value: Any)
                     = when (value) {
-                is LocalDateTime -> value.toJsonString()
+                is ZonedDateTime -> value.toJsonString()
                 else -> value.toString()
             }
         })
