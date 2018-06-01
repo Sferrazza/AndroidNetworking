@@ -1,9 +1,10 @@
 package com.nexcom.NXCore
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import java.text.SimpleDateFormat
-import java.util.*
+import com.github.salomonbrys.kotson.registerTypeAdapter
+import com.google.gson.*
+import java.time.LocalDate
+import java.time.ZonedDateTime
+
 
 /**
  * Created by danielmeachum on 1/8/18.
@@ -12,7 +13,21 @@ import java.util.*
 open class NXModelParser
 {
     val gson: Gson
-        get() = GsonBuilder().setDateFormat(SimpleDateFormat(jsonDateFormat, Locale.US).toLocalizedPattern()).create()
+        get() = GsonBuilder().registerTypeAdapter<ZonedDateTime> {
+            serialize {
+                JsonPrimitive(it.src.toJsonString())
+            }
+            deserialize {
+                it.json.asString.toZonedDateTime()
+            }
+        }.registerTypeAdapter<LocalDate> {
+            serialize {
+                JsonPrimitive(it.src.toJsonString())
+            }
+            deserialize {
+                it.json.asString.toLocalDate()
+            }
+        }.create()
 
     /**
      * Parses model into JSON string. Uses Nexcom's compatible date format.
