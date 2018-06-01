@@ -46,4 +46,5 @@ dependencies {
     implementation 'com.beust:klaxon:3.0.1'
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
     implementation "org.jetbrains.anko:anko-coroutines:$anko_version"
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.1.0'
 }
