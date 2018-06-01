@@ -131,9 +131,14 @@ open class NXCachedDataManager<T>(val context: Context, network : NXNetwork, rpc
     override fun handleRawResponse(responseString: String) {
 
         bg {
-            val dateString = ZonedDateTime.now().toString()
+            val dateString = ZonedDateTime.now().toJsonString()
 
             setCachedValue(CachedValue(dateString,responseString))
+
+            if (options.isDebug) {
+
+                Log.d(LOG_TAG,"Cached response from ${options.rpc} with refresh date $dateString")
+            }
         }
         super.handleRawResponse(responseString)
     }
