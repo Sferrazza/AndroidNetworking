@@ -48,7 +48,7 @@ fun nxJsonParser() = Klaxon()
 
             override fun fromJson(jv: JsonValue) =
                     if (jv.string != null) {
-                        ZonedDateTime.parse(jv.string, DateTimeFormatter.ofPattern(jsonDateFormat))
+                        ZonedDateTime.parse(jv.string, DateTimeFormatter.ofPattern(jsonDateFormat).withZone(ZoneId.systemDefault()))
                     } else {
                         throw KlaxonException("Couldn't parse date: ${jv.string}")
                     }
