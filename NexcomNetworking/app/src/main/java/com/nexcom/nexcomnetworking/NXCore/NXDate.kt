@@ -11,7 +11,7 @@ import java.util.*
  * Created by danielmeachum on 1/4/18.
  */
 
-val jsonDateFormat = "yyyy-MM-dd'T'HH:mm:ssXXX"
+val jsonDateFormat = "yyyy-MM-dd'T'HH:mm:ss"
 val jsonDateOnlyFormat = "yyyy-MM-dd"
 
 fun ZonedDateTime.toJsonString(): String {
