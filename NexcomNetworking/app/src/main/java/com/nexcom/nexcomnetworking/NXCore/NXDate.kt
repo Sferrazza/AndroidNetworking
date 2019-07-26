@@ -22,7 +22,7 @@ fun ZonedDateTime.toJsonString(): String {
 
 fun String.toZonedDateTime(): ZonedDateTime {
 
-    return ZonedDateTime.parse(this, DateTimeFormatter.ofPattern(jsonDateFormat))
+    return ZonedDateTime.parse(this, DateTimeFormatter.ofPattern(jsonDateFormat).withZone(ZoneId.systemDefault()))
 }
 
 fun LocalDate.toJsonString(): String {
